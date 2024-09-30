@@ -3,6 +3,7 @@ import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { CreateBookPipe } from './pipes/create-book.pipe';
+import { FindById } from './dto/find-by-Id.dto';
 
 @Controller('books')
 export class BooksController {
@@ -18,10 +19,10 @@ export class BooksController {
     return this.booksService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.booksService.findOne(+id);
-  // }
+  @Get(':id')
+  findOne(@Param('id') id:FindById) {
+    return this.booksService.findOne(id);
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {

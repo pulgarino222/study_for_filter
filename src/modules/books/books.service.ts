@@ -5,6 +5,7 @@ import {BookInterface} from './interfaces/book-interface.interface'
 import { Book } from './schema/book.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { FindById } from './dto/find-by-Id.dto';
 
 @Injectable()
 export class BooksService implements BookInterface {
@@ -22,8 +23,8 @@ export class BooksService implements BookInterface {
     return this.bookSchema.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} book`;
+  findOne(id:FindById):Promise<Book> {
+    return this.bookSchema.findById(id);
   }
 
   // update(id: number, updateBookDto: UpdateBookDto) {
