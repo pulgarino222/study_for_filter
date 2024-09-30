@@ -27,11 +27,13 @@ export class BooksService implements BookInterface {
     return this.bookSchema.findById(id);
   }
 
-  // update(id: number, updateBookDto: UpdateBookDto) {
-  //   return `This action updates a #${id} book`;
-  // }
+  update(id:FindById, updateBook: UpdateBookDto):Promise<Book> {
+    return this.bookSchema.findByIdAndUpdate(id,updateBook)
+  }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} book`;
-  // }
+  remove(id:FindById):Promise<void>{
+    return this.bookSchema.findByIdAndDelete(id)
+
+    
+  }
 }
