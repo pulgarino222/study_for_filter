@@ -1,7 +1,7 @@
 import { Prop, Schema , SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 import * as moongose from 'mongoose'
-import { Book } from "src/modules/books/entities/book.entity";
+import { Book } from "src/modules/books/schema/book.entity";
 
 
 @Schema()

@@ -1,24 +1,21 @@
-import { IsString,IsNotEmpty,IsOptional,IsDate} from "class-validator";
-import { Gender } from "src/modules/genders/entities/gender.entity";
-
+import { IsString, IsNotEmpty, IsDate,IsOptional } from "class-validator";
+import { Types } from "mongoose";
 
 export class CreateBookDto {
-    @IsNotEmpty()
-    @IsString()
-    title:string
-
 
     @IsNotEmpty()
     @IsString()
-    author:string
+    title: string;
 
+    @IsNotEmpty()
+    @IsString()
+    author: string;
 
     @IsNotEmpty()
     @IsDate()
-    publicationDate:Date
+    publicationDate: Date;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
-    gender:Gender
-
+    gender: Types.ObjectId;
 }
