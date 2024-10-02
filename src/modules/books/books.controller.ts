@@ -7,6 +7,7 @@ import { FindById } from './dto/find-by-Id.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { query } from 'express';
 import { Query } from '@nestjs/common';
+import { FindByIdPipeCustom } from './pipes/find-by-id.pipe';
 
 @Controller('books')
 export class BooksController {
@@ -24,17 +25,17 @@ export class BooksController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id:FindById) {
+  findOne(@Param('id',FindByIdPipeCustom) id:FindById) {
     return this.booksService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id:FindById, @Body() updateBookDto: UpdateBookDto) {
+  update(@Param('id',FindByIdPipeCustom) id:FindById, @Body() updateBookDto: UpdateBookDto) {
     return this.booksService.update(id, updateBookDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id:FindById) {
+  remove(@Param('id',FindByIdPipeCustom) id:FindById) {
     return this.booksService.remove(id);
   }
 }
