@@ -4,6 +4,9 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { CreateBookPipe } from './pipes/create-book.pipe';
 import { FindById } from './dto/find-by-Id.dto';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { query } from 'express';
+import { Query } from '@nestjs/common';
 
 @Controller('books')
 export class BooksController {
@@ -14,9 +17,10 @@ export class BooksController {
     return this.booksService.create(createBookDto);
   }
 
+ 
   @Get()
-  findAll() {
-    return this.booksService.findAll();
+  async findAll(@Query() paginationDto: PaginationDto) {
+    return this.booksService.findAll(paginationDto);
   }
 
   @Get(':id')
@@ -34,3 +38,4 @@ export class BooksController {
     return this.booksService.remove(id);
   }
 }
+
