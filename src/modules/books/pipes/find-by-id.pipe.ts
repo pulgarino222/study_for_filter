@@ -1,36 +1,43 @@
-import { ArgumentMetadata, BadRequestException, Inject, Injectable, PipeTransform } from '@nestjs/common';
+import {
+  ArgumentMetadata,
+  BadRequestException,
+  Inject,
+  Injectable,
+  PipeTransform,
+} from '@nestjs/common';
 import { FindById } from '../dto/find-by-Id.dto';
 import { plainToInstance } from 'class-transformer';
-import { IsUUID, validate } from 'class-validator';
+import { validate } from 'class-validator';
 import { BooksService } from '../books.service';
 
 @Injectable()
 export class FindByIdPipeCustom implements PipeTransform {
-  constructor(@Inject()private bookService:BooksService){}
+  constructor(@Inject() private bookService: BooksService) {}
 
-
-  async transform(value: any, {metatype}: ArgumentMetadata) {
-
-    if (metatype!==FindById){
-      return value
+  async transform(value: any, { metatype }: ArgumentMetadata) {
+    // Solo aplica el pipe si el metatype es FindById
+    if (metatype !== FindById) {
+      return value;
     }
 
-    
-    const object= plainToInstance(metatype,value)
-    const errors=await validate(object)
+    // Crea una instancia de FindById
+    const object = plainToInstance(FindById, { id: value });
 
-    if(errors.length>0){
-      throw new BadRequestException("there is a error in the validation of id are you sure tha id is valid invalid format")
-
+    // Valida el objeto
+    const errors = await validate(object);
+    if (errors.length > 0) {
+      throw new BadRequestException(
+        'Validation error: Invalid format for ID.',
+      );
     }
 
-    const id=await this.bookService.findOne(value)
-    if(!id){
-      throw new BadRequestException("the id was not found ")
-
+    // Verifica la existencia del ID en la base de datos
+    const book = await this.bookService.findOne(value);
+    if (!book) {
+      throw new BadRequestException('The ID was not found.');
     }
 
-    return value
-    
+    // Retorna el valor (ID)
+    return value;
   }
 }

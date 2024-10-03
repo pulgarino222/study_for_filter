@@ -15,6 +15,6 @@ export function IsDateInFuture(validationOptions?: ValidationOptions) {
           return 'Date must be in the future';
         },
       },
-    });
+    }); 
   };
 }
