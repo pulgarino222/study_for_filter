@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsDate,IsOptional } from "class-validator";
+import { IsString, IsNotEmpty, IsDate,IsOptional, IsMongoId } from "class-validator";
 import { Types } from "mongoose";
 
 export class CreateBookDto {
@@ -15,6 +15,7 @@ export class CreateBookDto {
     @IsDate()
     publicationDate: Date;
 
+    @IsMongoId()
     @IsOptional()
     @IsString()
     gender: Types.ObjectId;
